@@ -15,7 +15,7 @@ export class UsersService {
     const { password, ...safe } = saved as any;
     return safe;
   }
-
+  //TODO: tipar el retorno de datos de los métodos de este servicio y otro en caso de existir.
   async findAll() {
     return this.repo.find({
       select: ['id', 'name', 'lastName', 'email', 'createdAt', 'updatedAt'],
