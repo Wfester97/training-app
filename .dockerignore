@@ -1,0 +1,14 @@
+node_modules
+dist
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.tmp
+.cache
+.env
+.env*
+.DS_Store
+*.swp
+.idea
+.vscode
+coverage 
