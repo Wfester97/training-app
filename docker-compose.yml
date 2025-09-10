@@ -1,7 +1,8 @@
+
 services:
   db:
     image: postgres:16-alpine
-    restart: unless-stopped
+    container_name: training-db
     environment:
       POSTGRES_USER: nest
       POSTGRES_PASSWORD: nest
@@ -10,5 +11,29 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "nest"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    container_name: training-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: nest
+      DB_PASS: nest
+      DB_NAME: training
+      PORT: 3000
+    ports:
+      - "3000:3000"
+
 volumes:
   pgdata:
+
